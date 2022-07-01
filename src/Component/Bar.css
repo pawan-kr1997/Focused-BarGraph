@@ -1,0 +1,80 @@
+.GrandParent {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+/* ----------------- Bar Part styling -------------- */
+
+.Parent {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    overflow: auto;
+    scroll-snap-type: x mandatory;
+    align-items: flex-end;
+    margin: auto;
+
+
+}
+
+.Parent::-webkit-scrollbar {
+    display: initial;
+}
+
+.Parent::-webkit-scrollbar {
+    width: 20%;
+    height: 5px;
+    border: transparent;
+
+}
+
+.Parent::-webkit-scrollbar-track {
+
+    border: transparent;
+    border-radius: 30%;
+}
+
+.Parent::-webkit-scrollbar-thumb {
+    background: lightgrey;
+    border-radius: 10px;
+}
+
+.Parent:hover {
+    overflow-x: scroll;
+}
+
+.BarBody {
+    width: 20px;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    border-radius: 2px;
+    box-shadow: -3px -3px 5px #ffffff70, 3px 3px 4px #00000070
+}
+
+/* --------------------- Data Area Part Styling ----------------- */
+
+.DataAreaParent{
+    display: flex;
+    flex-direction: row;
+    gap: 70px;
+    margin: auto;
+    padding:10px 30px 10px 30px;
+    
+}
+
+.DataParent{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.BoldText{
+    color:gray;
+}
+
+.SpanText{
+    font-size: 1.5rem;
+    font-weight: bolder;
+    width: 120px;
+}
