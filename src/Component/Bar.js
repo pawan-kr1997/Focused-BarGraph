@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import sound from '../Assets/focus.mp3';
+import PropTypes from 'prop-types';
 import './Bar.css';
 
 
@@ -21,12 +22,12 @@ const Bar = (props) => {
         let maxData = barData[0][props.yAxis];
 
         for (let i = 1; i < barData.length; i++) {
-            if (parseInt(barData[i][props.yAxis]) > parseInt(maxData)) {
+            if (barData[i][props.yAxis] > maxData) {
                 maxData = barData[i][props.yAxis];
             }
         }
 
-        return Math.ceil(parseInt(maxData) / parseInt(props.barHeight));
+        return Math.ceil(maxData / parseInt(props.barHeight));
     }
 
 
@@ -82,44 +83,53 @@ const Bar = (props) => {
 
     barHeightScale = determineBarHeightScale(barData);
 
-    for (let index = 0; index < barData.length; index++) {
+    try {
+        for (let index = 0; index < barData.length; index++) {
 
-        let barHeight = Math.floor((100 / parseInt(props.barHeight)) * (parseInt(barData[index][props.yAxis]) / barHeightScale));
-        let barHeightPercent = barHeight + "%";
+            let barHeight = Math.ceil((100 / parseInt(props.barHeight)) * (barData[index][props.yAxis] / barHeightScale));
+            let barHeightPercent = barHeight + "%";
 
-        let dataTestId = barData[index][props.xAxis] + "_" + barData[index][props.yAxis];
+            if (!barData[index][props.xAxis] || !barData[index][props.yAxis]) {
+                throw new Error("Either the data entered was undefined or xAxis and yAxis did not matched with the data");
+            }
 
-        if (index === 0) {
-            barArray.push(<div key={index}
-                ref={(element) => { refs.current[index] = element }}
-                className='BarBody'
-                style={{
-                    marginLeft: "50%",
-                    height: barHeightPercent
-                }}
-                data-test-id={dataTestId}
-                onClick={() => handleClick(index)}></div>)
+            let dataTestId = barData[index][props.xAxis] + "_" + barData[index][props.yAxis].toString();
+
+            if (index === 0) {
+                barArray.push(<div key={index}
+                    ref={(element) => { refs.current[index] = element }}
+                    className='BarBody'
+                    style={{
+                        marginLeft: "50%",
+                        height: barHeightPercent
+                    }}
+                    data-test-id={dataTestId}
+                    onClick={() => handleClick(index)}></div>)
+            }
+            else if (index === barData.length - 1) {
+                barArray.push(<div key={index}
+                    className='BarBody'
+                    ref={(element) => { refs.current[index] = element }}
+                    style={{
+                        marginRight: "50%",
+                        height: barHeightPercent
+                    }}
+                    data-test-id={dataTestId}
+                    onClick={() => handleClick(index)}></div>)
+            }
+            else {
+                barArray.push(<div key={index}
+                    ref={(element) => { refs.current[index] = element }}
+                    className='BarBody'
+                    style={{ height: barHeightPercent }}
+                    data-test-id={dataTestId}
+                    onClick={() => handleClick(index)}></div>);
+            }
+
         }
-        else if (index === barData.length - 1) {
-            barArray.push(<div key={index}
-                className='BarBody'
-                ref={(element) => { refs.current[index] = element }}
-                style={{
-                    marginRight: "50%",
-                    height: barHeightPercent
-                }}
-                data-test-id={dataTestId}
-                onClick={() => handleClick(index)}></div>)
-        }
-        else {
-            barArray.push(<div key={index}
-                ref={(element) => { refs.current[index] = element }}
-                className='BarBody'
-                style={{ height: barHeightPercent }}
-                data-test-id={dataTestId}
-                onClick={() => handleClick(index)}></div>);
-        }
-
+    }
+    catch (err) {
+        console.log("Error occured: " + err.message);
     }
 
 
@@ -148,6 +158,19 @@ const Bar = (props) => {
     )
 
 }
+
+Bar.propTypes = {
+    barParentWidth: PropTypes.string.isRequired,
+    barParentHeight: PropTypes.string.isRequired,
+    barHeight: PropTypes.string.isRequired,
+    xAxis: PropTypes.string.isRequired,
+    yAxis: PropTypes.string.isRequired,
+    barColor: PropTypes.string.isRequired,
+    barFocusColor: PropTypes.string.isRequired,
+    data: PropTypes.array.isRequired,
+    soundEnable: PropTypes.bool.isRequired
+}
+
 
 
 export default Bar;
