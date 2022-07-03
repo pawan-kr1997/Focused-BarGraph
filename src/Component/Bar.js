@@ -13,10 +13,13 @@ const Bar = (props) => {
 
     let barHeightScale;
 
+    //Function to make the bar active on clicking -------------
 
     const handleClick = (index) => {
         refs.current[index]?.scrollIntoView({ behavior: 'smooth', inline: "center" });
     };
+
+    //Function to determine scaling factor  --------------
 
     const determineBarHeightScale = (barData) => {
         let maxData = barData[0][props.yAxis];
@@ -30,6 +33,7 @@ const Bar = (props) => {
         return Math.ceil(maxData / parseInt(props.barHeight));
     }
 
+    //Logic for DOM manipulation ----------------
 
     useEffect(() => {
 
@@ -82,6 +86,8 @@ const Bar = (props) => {
     }, [])
 
     barHeightScale = determineBarHeightScale(barData);
+
+    //Logic to populate the bars ---------------  
 
     try {
         for (let index = 0; index < barData.length; index++) {
