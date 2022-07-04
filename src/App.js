@@ -88,7 +88,7 @@ const App = () => {
     { Date: "19/12/22", "Steps Counts": 168 },
     { Date: "20/12/22", "Steps Counts": 10 },
     { Date: "21/12/22", "Steps Counts": 68 },
-    { Date: "22/12/22", "Steps Counts": 58 },
+    { Date: "22/12/22", "Steps Counts": 158 },
     { Date: "23/12/22", "Steps Counts": 68 },
     { Date: "24/12/22", "Steps Counts": 68 },
     { Date: "25/12/22", "Steps Counts": 48 },

@@ -37,7 +37,6 @@ const Bar = (props) => {
 
     useEffect(() => {
 
-        let barGroup = document.getElementsByClassName("BarBody");
         let barParent = document.querySelector('div.Parent');
         const XAxisData = document.getElementById("XAxisData");
         const YAxisData = document.getElementById("YAxisData");
@@ -58,25 +57,23 @@ const Bar = (props) => {
             else
                 leftBarIndex = approxBarIndex - 15;
 
-
-            if ((approxBarIndex + 15) >= barGroup.length)
-                rightBarIndex = barGroup.length;
+            if ((approxBarIndex + 15) >= refs.current.length)
+                rightBarIndex = refs.current.length;
             else
                 rightBarIndex = approxBarIndex + 15;
 
 
-
-
             for (let i = leftBarIndex; i < rightBarIndex; i++) {
 
-                if (Math.ceil(barGroup[i].getBoundingClientRect().left) > midWindow - 25 && Math.ceil(barGroup[i].getBoundingClientRect().left) < midWindow + 25) {
+                if (Math.ceil(refs.current[i].getBoundingClientRect().left) > midWindow - 25 && Math.ceil(refs.current[i].getBoundingClientRect().left) < midWindow + 25) {
                     refs.current[i].style.background = props.barFocusColor;
                     if (props.soundEnable) {
                         focusSound.play();
                     }
 
-                    XAxisData.textContent = barGroup[i].attributes["data-test-id"].nodeValue.split('_')[0];
-                    YAxisData.textContent = barGroup[i].attributes["data-test-id"].nodeValue.split('_')[1];
+                    XAxisData.textContent = refs.current[i].attributes["data-test-id"].nodeValue.split('_')[0];
+                    YAxisData.textContent = refs.current[i].attributes["data-test-id"].nodeValue.split('_')[1];
+
                 }
                 else {
                     refs.current[i].style.background = props.barColor;

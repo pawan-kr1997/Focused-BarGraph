@@ -72,10 +72,12 @@
 .BoldText{
     color:gray;
     font-weight: 400;
+    text-align: center;
 }
 
 .SpanText{
     font-size: 1.5rem;
     font-weight: bolder;
     width: 120px;
+    text-align: center;
 }
